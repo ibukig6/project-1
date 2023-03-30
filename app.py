@@ -21,7 +21,7 @@ def email():
     email = request.args.get("email")
     password = request.args.get("password")
     return f"{email},{password}"
-#http://127.0.0.1:5000/page?=email=13&password=12
+#http://127.0.0.1:5000/page?email=13&password=12
 
 @app.route("/index")
 def index():
