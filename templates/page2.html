@@ -1,0 +1,14 @@
+
+{{id}}
+{{ps}}
+{%if type %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire(
+        '{{type}}',
+        'You clicked the button!',
+        'success'
+        )
+    </script>
+        
+{% endif %}
