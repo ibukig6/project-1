@@ -1,6 +1,21 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,g
+import sqlite3 as sql                          #↑
+#from flask import g----------------------------↑在這上面，一種省略寫法
+DATABASE = 'database.db'
 
 app = Flask(__name__)
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sql.connect(DATABASE)
+    return db
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 @app.route("/")
 def hello_python():
@@ -45,6 +60,15 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route("/users")
+def users():
+    with get_db() as cur: #with get_db().cursor() as cur:
+        cur.row_factory = sql.Row
+        cur = cur.cursor() #上面的註解可以把這行省略
+        cur.execute("select * from Users")
+        data = cur.fetchall()
+        cur.close()
+    return render_template("users.html",data = data)
 
 
 if __name__ =="__main__":
