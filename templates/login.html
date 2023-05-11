@@ -1,5 +1,5 @@
-{% extends "layout.html"%}
-{% block title%}{% endblock%}    
+{% extends "layout/layout.html"%}
+{% block title%} Login {% endblock%}
 {% block header%}                
 <style>
 .gradient-custom-2 {
@@ -42,10 +42,10 @@
                     <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                   </div>
   
-                  <form action="/login" method="post">
+                  <form action="/login" method="post" onsubmit="return CheckSubmit();">
                     <p>Please login to your account</p>
   
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-4"><!--這裡的id是帳號，登入會用到的帳號-->
                       <input id="form2Example11" class="form-control" name="account"
                         placeholder="Phone number or email address" />
                       <label class="form-label" for="form2Example11">Username</label>
@@ -85,6 +85,29 @@
       </div>
     </div>
   </section>
+
+  <script>
+    function CheckSubmit(){
+      let account = document.getElementById("form2Example11").value.length;
+      let password = document.getElementById("form2Example22").value.length;
+      if (account == 0 && password == 0 ){
+        alert("請輸入資料");
+        return false
+      }
+      else if (account == 0 ){
+        alert("請輸入帳號");
+        return false
+      }
+      else if (password == 0 ){
+        alert("請輸入密碼");
+        return false
+      }
+      else{
+        return true
+      }
+    }
+
+  </script>
 
   {%if type %}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
