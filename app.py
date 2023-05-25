@@ -70,6 +70,17 @@ def users():
         cur.close()
     return render_template("users.html",data = data)
 
+@app.route("/deleteuser/<int:id>",methods=['POST'])
+def deleteuser(id):
+    with get_db() as cur: #with get_db().cursor() as cur:
+        cur.row_factory = sql.Row
+        cur = cur.cursor() #上面的註解可以把這行省略
+        cur.execute(f"DELETE FROM Users where id={id}")
+        cur.execute("select * from Users")
+        data = cur.fetchall()
+        cur.close()
+    return render_template("users.html",data=data)
+
 
 if __name__ =="__main__":
     app.run(debug=True)

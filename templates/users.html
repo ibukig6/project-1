@@ -1,21 +1,36 @@
 {% extends "layout/back.html"%}
 {%block main %}
-<table class="table">
+<table class="table" style="width: 1000px;">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">名字</th>
         <th scope="col">帳號</th>
         <th scope="col">密碼</th>
+        <th scope="col">功能</th>
       </tr>
     </thead>
     <tbody>
-        {%for i in data %}
+        {%for i in range(data|length) %}
         <tr>
-            <th scope="row">{{ i.id }}</th>
-            <td>{{ i.name }}</td>
-            <td>{{ i.account }}</td>
-            <td>{{ i.password }}</td>
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ data[i].name }}</td>
+            <td>{{ data[i].account }}</td>
+            <td>{{ data[i].password }}</td>
+            <td>
+              <div class="row">
+                <div class="col">
+                  <button type="button" class="btn btn-outline-success mx-4">修改</button>
+                </div>
+                <div class="col">
+                  <form action="/deleteuser/{{data[i].id}}",methods="post">
+                    <button class="btn btn-outline-danger" >刪除</button>
+                  </form>
+                </div>
+              </div>
+              
+              
+            </td>
         </tr>
         {% endfor %}
     </tbody>
