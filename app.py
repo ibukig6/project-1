@@ -48,7 +48,7 @@ def index():
 
 @app.route("/login",methods=["GET","POST"])
 def login():
-    if request.method == "POST":
+    if request.method == "POST":                                 #這裡沒有亮黃色
         name =request.form.get("account")
         password=request.form.get("password")
         if name == "123" and password =="123":
@@ -75,7 +75,7 @@ def deleteuser(id):
     with get_db() as cur: #with get_db().cursor() as cur:
         cur.row_factory = sql.Row
         cur = cur.cursor() #上面的註解可以把這行省略
-        cur.execute(f"DELETE FROM Users where id={id}")
+        cur.execute(f"DELETE FROM Users where id={id}") ### Users
         cur.execute("select * from Users")
         data = cur.fetchall()
         cur.close()

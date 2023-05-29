@@ -24,7 +24,7 @@
                 </div>
                 <div class="col">
                   <form action="/deleteuser/{{data[i].id}}",methods="post">
-                    <button class="btn btn-outline-danger" >刪除</button>
+                    <button class="btn btn-outline-danger" onclick="if(confirm('您確定要刪除嗎？')) return true;else return false">刪除</button>
                   </form>
                 </div>
               </div>
