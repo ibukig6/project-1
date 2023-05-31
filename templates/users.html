@@ -20,13 +20,13 @@
             <td>
               <div class="row">
                 <div class="col">
-                  <button type="button" class="btn btn-outline-success mx-4">修改</button>
+                  <button type="button" class="btn btn-outline-success">修改</button>
                 </div>
                 <div class="col">
-                  <form action="/deleteuser/{{data[i].id}}",methods="post">
+                  <form action="/deleteuser/{{ data[i].id }}" method="post">
                     <button class="btn btn-outline-danger" onclick="if(confirm('您確定要刪除嗎？')) return true;else return false">刪除</button>
                   </form>
-                </div>
+              </div>
               </div>
               
               
@@ -35,4 +35,13 @@
         {% endfor %}
     </tbody>
   </table>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+          <script>Success('{{message}}')</script>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
 {% endblock %}

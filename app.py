@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,g
+from flask import Flask,render_template,request,g,redirect,url_for,flash
 import sqlite3 as sql                          #↑
 #from flask import g----------------------------↑在這上面，一種省略寫法
 DATABASE = 'database.db'
@@ -48,7 +48,7 @@ def index():
 
 @app.route("/login",methods=["GET","POST"])
 def login():
-    if request.method == "POST":                                 #這裡沒有亮黃色
+    if request.method == "POST":                                 #這裡沒有亮藍色
         name =request.form.get("account")
         password=request.form.get("password")
         if name == "123" and password =="123":
@@ -70,17 +70,20 @@ def users():
         cur.close()
     return render_template("users.html",data = data)
 
-@app.route("/deleteuser/<int:id>",methods=['POST'])
+@app.route("/deleteuser/<int:id>",methods=["POST"])
 def deleteuser(id):
     with get_db() as cur: #with get_db().cursor() as cur:
         cur.row_factory = sql.Row
         cur = cur.cursor() #上面的註解可以把這行省略
-        cur.execute(f"DELETE FROM Users where id={id}") ### Users
-        cur.execute("select * from Users")
-        data = cur.fetchall()
+        cur.execute(f"DELETE FROM Users where id={id}")
+        #cur.execute("select * from Users")
+        #data = cur.fetchall()
         cur.close()
-    return render_template("users.html",data=data)
+    flash('刪除成功')
+    return redirect(url_for('users'))
+    #return render_template("users.html",data=data)
 
 
 if __name__ =="__main__":
+    app.secret_key = "Your Key"
     app.run(debug=True)
